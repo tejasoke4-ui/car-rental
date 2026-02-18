@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}{{ action }} Car | Velocity Admin{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen bg-gray-950 text-gray-200">
+
+  <!-- Admin Sidebar -->
+  <aside class="w-64 bg-gray-900 border-r border-gray-800 p-6 hidden md:block">
+    <h2 class="text-2xl font-bold text-yellow-400 mb-10">ADMIN</h2>
+
+    <nav class="space-y-3 text-sm">
+      <a href="{% url 'admin_dashboard' %}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 transition">
+        Dashboard
+      </a>
+      <a href="{% url 'admin_cars' %}" class="block px-4 py-2 rounded-lg bg-yellow-400 text-black font-semibold">
+        Manage Cars
+      </a>
+      <a href="{% url 'admin_bookings' %}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 transition">
+        Manage Bookings
+      </a>
+      <a href="{% url 'admin_users' %}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 transition">
+        Users
+      </a>
+      <hr class="border-gray-800 my-4">
+      <a href="{% url 'logout' %}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 transition text-red-400">
+        Logout
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-8">
+
+    <!-- Header -->
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold">{{ action }} Car</h1>
+    </div>
+
+    <!-- Form -->
+    <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8 max-w-2xl">
+
+      <form method="POST" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Brand -->
+        <div>
+          <label class="block text-gray-300 font-medium mb-2">Brand</label>
+          <input type="text" name="brand" value="{% if car %}{{ car.brand }}{% endif %}" required
+            class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-yellow-400 focus:outline-none text-white">
+        </div>
+
+        <!-- Model -->
+        <div>
+          <label class="block text-gray-300 font-medium mb-2">Model</label>
+          <input type="text" name="car_model" value="{% if car %}{{ car.car_model }}{% endif %}" required
+            class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-yellow-400 focus:outline-none text-white">
+        </div>
+
+        <!-- Variant -->
+        <div>
+          <label class="block text-gray-300 font-medium mb-2">Variant</label>
+          <input type="text" name="car_variant" value="{% if car %}{{ car.car_variant }}{% endif %}" required
+            class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-yellow-400 focus:outline-none text-white">
+        </div>
+
+        <!-- Category -->
+        <div>
+          <label class="block text-gray-300 font-medium mb-2">Category</label>
+          <select name="category" required class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-yellow-400 focus:outline-none text-white">
+            <option value="">-- Select Category --</option>
+            <option value="Luxury" {% if car.category == 'Luxury' %}selected{% endif %}>Luxury</option>
+            <option value="Sports" {% if car.category == 'Sports' %}selected{% endif %}>Sports</option>
+            <option value="SUV" {% if car.category == 'SUV' %}selected{% endif %}>SUV</option>
+            <option value="Sedan" {% if car.category == 'Sedan' %}selected{% endif %}>Sedan</option>
+            <option value="Hatchback" {% if car.category == 'Hatchback' %}selected{% endif %}>Hatchback</option>
+          </select>
+        </div>
+
+        <!-- Price -->
+        <div>
+          <label class="block text-gray-300 font-medium mb-2">Daily Price ($)</label>
+          <input type="number" name="price" value="{% if car %}{{ car.price }}{% endif %}" step="0.01" required
+            class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-yellow-400 focus:outline-none text-white">
+        </div>
+
+        <!-- Image -->
+        <div>
+          <label class="block text-gray-300 font-medium mb-2">Car Image</label>
+          <input type="file" name="img" accept="image/*"
+            class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-yellow-400 focus:outline-none text-gray-400">
+          {% if car.img %}
+          <p class="text-sm text-gray-400 mt-2">Current: <a href="{{ car.img.url }}" target="_blank" class="text-yellow-400 hover:underline">View Image</a></p>
+          {% endif %}
+        </div>
+
+        <!-- Available -->
+        <div>
+          <label class="flex items-center space-x-3">
+            <input type="checkbox" name="available" {% if car.available or not car %}checked{% endif %}
+              class="w-4 h-4 rounded">
+            <span class="text-gray-300">Available for Booking</span>
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-6 border-t border-gray-800 flex gap-4">
+          <button type="submit" class="bg-yellow-400 text-black px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition">
+            {{ action }} Car
+          </button>
+          <a href="{% url 'admin_cars' %}" class="bg-gray-800 hover:bg-gray-700 px-6 py-3 rounded-lg font-semibold transition">
+            Cancel
+          </a>
+        </div>
+
+      </form>
+
+    </div>
+
+  </main>
+</div>
+{% endblock %}
