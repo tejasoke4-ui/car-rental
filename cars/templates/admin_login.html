@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}Admin Login | Velocity Admin Panel{% endblock %}
+
+{% block content %}
+{% if messages %}
+<div id="toast-container" style="position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#f87171; color:#fff; padding:12px 25px; border-radius:10px; font-weight:600; box-shadow:0 5px 15px rgba(0,0,0,0.3); z-index:999; opacity:0; transition:opacity 0.5s;">
+    {% for message in messages %}{{ message }}{% endfor %}
+</div>
+<script>
+const toast = document.getElementById('toast-container');
+if(toast){ toast.style.opacity = 1; setTimeout(()=>{toast.style.opacity=0;},3000);}
+</script>
+{% endif %}
+
+<div class="min-h-screen bg-gray-950 py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+      <!-- Left Section - Admin Info -->
+      <div>
+        <div class="bg-yellow-400 text-black rounded-full w-16 h-16 flex items-center justify-center text-3xl font-bold mb-6">⚙️</div>
+        <h2 class="text-4xl font-bold mb-6">Admin Control Panel</h2>
+        <p class="text-gray-400 text-lg mb-8">Manage your car rental business efficiently with our powerful admin dashboard.</p>
+
+        <!-- Admin Features -->
+        <div class="space-y-6">
+          <div class="flex gap-4">
+            <div class="text-yellow-400 text-2xl">📊</div>
+            <div>
+              <h3 class="font-bold mb-1">Dashboard Analytics</h3>
+              <p class="text-gray-400 text-sm">Real-time insights into bookings, revenue, and fleet performance.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="text-yellow-400 text-2xl">🚗</div>
+            <div>
+              <h3 class="font-bold mb-1">Fleet Management</h3>
+              <p class="text-gray-400 text-sm">Add, edit, and manage your entire vehicle inventory with images and pricing.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="text-yellow-400 text-2xl">📅</div>
+            <div>
+              <h3 class="font-bold mb-1">Booking Control</h3>
+              <p class="text-gray-400 text-sm">View, update, and manage all customer bookings and reservations.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="text-yellow-400 text-2xl">👥</div>
+            <div>
+              <h3 class="font-bold mb-1">User Management</h3>
+              <p class="text-gray-400 text-sm">Monitor registered users and manage customer accounts.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="text-yellow-400 text-2xl">💰</div>
+            <div>
+              <h3 class="font-bold mb-1">Revenue Tracking</h3>
+              <p class="text-gray-400 text-sm">Track total revenue, pricing trends, and booking statistics.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Stats -->
+        <div class="mt-12 pt-8 border-t border-gray-800">
+          <p class="text-gray-400 text-sm mb-3 font-semibold">Admin Panel Features:</p>
+          <p class="text-gray-400 text-sm mb-2">✓ Full control over fleet and bookings</p>
+          <p class="text-gray-400 text-sm mb-2">✓ Advanced reporting and analytics</p>
+          <p class="text-gray-400 text-sm">✓ Secure admin authentication</p>
+        </div>
+      </div>
+
+      <!-- Right Section - Admin Login Form -->
+      <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 backdrop-blur-xl">
+        <div class="flex items-center justify-center mb-8">
+          <div class="bg-yellow-400 text-black rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold">🔐</div>
+        </div>
+        <h3 class="text-2xl font-bold mb-2 text-center">Admin Access</h3>
+        <p class="text-gray-400 text-center text-sm mb-8">Sign in with your admin credentials</p>
+
+        <form method="POST" action="{% url 'admin_login' %}" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div>
+                <label class="block text-gray-300 font-medium mb-2">Admin Username</label>
+                <input type="text" name="username" placeholder="Enter admin username" required
+                style="width:100%; padding:12px; border-radius:8px; border:1px solid #334155; background:#ffffff; color:#000; font-size:16px;"
+                onfocus="this.style.borderColor='#fca311'" onblur="this.style.borderColor='#334155'">
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label class="block text-gray-300 font-medium mb-2">Admin Password</label>
+                <input type="password" name="password" placeholder="Enter admin password" required
+                style="width:100%; padding:12px; border-radius:8px; border:1px solid #334155; background:#ffffff; color:#000; font-size:16px;"
+                onfocus="this.style.borderColor='#fca311'" onblur="this.style.borderColor='#334155'">
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" style="width:100%; padding:12px; background:#fca311; border:none; border-radius:8px; font-weight:600; cursor:pointer; color:black; font-size:16px; transition:opacity 0.3s;">
+                Access Admin Panel
+            </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="relative my-8">
+            <div class="absolute inset-0 flex items-center">
+                <div style="width:100%; border-top:1px solid #334155;"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+                <span style="padding:0 8px; background:#111827; color:#8b5cf6;">OR</span>
+            </div>
+        </div>
+
+        <!-- Back Link -->
+        <p style="text-align:center; margin-top:16px; color:#666;">
+            <a href="{% url 'home' %}" style="color:#60a5fa; text-decoration:none;">← Back to Velocity</a>
+        </p>
+
+        <!-- Warning -->
+        <div style="background:#7c2d12; border:1px solid #ea580c; border-radius:8px; padding:12px; margin-top:12px; font-size:12px; color:#fed7aa;">
+            ⚠️ <strong>Admin Only:</strong> Unauthorized access attempts are logged and monitored.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

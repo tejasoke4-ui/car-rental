@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Manage Users | Velocity Admin{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen bg-gray-950 text-gray-200">
+
+  {% include 'admin_sidebar.html' %}
+
+  <!-- Main Content -->
+  <main class="flex-1 p-8">
+
+    <!-- Header -->
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold">Manage Users</h1>
+    </div>
+
+    {% if messages %}
+    <div class="bg-green-500/20 border border-green-500/50 text-green-400 px-4 py-3 rounded-lg mb-6">
+      {% for message in messages %}{{ message }}{% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Users List -->
+    <div class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden">
+
+      <div class="overflow-x-auto">
+        <table class="w-full">
+
+          <thead class="bg-gray-800 border-b border-gray-700">
+            <tr>
+              <th class="text-left px-6 py-4 text-gray-300 font-medium">Full Name</th>
+              <th class="text-left px-6 py-4 text-gray-300 font-medium">Username</th>
+              <th class="text-left px-6 py-4 text-gray-300 font-medium">Member Since</th>
+              <th class="text-left px-6 py-4 text-gray-300 font-medium">Total Bookings</th>
+              <th class="text-left px-6 py-4 text-gray-300 font-medium">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for user in users %}
+            <tr class="border-b border-gray-800 hover:bg-gray-800/50 transition">
+              <td class="px-6 py-4 text-white font-medium">{{ user.full_name }}</td>
+              <td class="px-6 py-4 text-gray-300">{{ user.username }}</td>
+              <td class="px-6 py-4 text-gray-400 text-sm">{{ user.created_at|date:"M d, Y" }}</td>
+              <td class="px-6 py-4">
+                <span class="px-3 py-1 text-xs rounded-full bg-blue-500/20 text-blue-400">
+                  {{ user.booking_set.count }}
+                </span>
+              </td>
+              <td class="px-6 py-4">
+                <a href="{% url 'admin_user_delete' user.id %}" class="bg-red-500/20 text-red-400 hover:bg-red-500/30 px-3 py-1 rounded text-sm transition">
+                  Delete
+                </a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="5" class="text-center py-8 text-gray-500">
+                No users found
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+{% endblock %}

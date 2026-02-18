@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block title %}Login | Velocity Car Rental{% endblock %}
+{% block content %}
+{% if messages %}
+<div id="toast-container" style="position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#f87171; color:#fff; padding:12px 25px; border-radius:10px; font-weight:600; box-shadow:0 5px 15px rgba(0,0,0,0.3); z-index:999; opacity:0; transition:opacity 0.5s;">
+    {% for message in messages %}{{ message }}{% endfor %}
+</div>
+<script>
+const toast = document.getElementById('toast-container');
+if(toast){ toast.style.opacity = 1; setTimeout(()=>{toast.style.opacity=0;},3000);}
+</script>
+{% endif %}
+
+<div class="min-h-screen bg-gray-950 py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+      <!-- Left Section - Features -->
+      <div>
+        <h2 class="text-4xl font-bold mb-6">Welcome Back to Velocity</h2>
+        <p class="text-gray-400 text-lg mb-8">Sign in to access your bookings and manage your rentals.</p>
+
+        <!-- Features -->
+        <div class="space-y-6">
+          <div class="flex gap-4">
+            <div class="text-yellow-400 text-2xl">✓</div>
+            <div>
+              <h3 class="font-bold mb-1">Manage Your Bookings</h3>
+              <p class="text-gray-400 text-sm">View, update, or cancel your car reservations anytime.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="text-yellow-400 text-2xl">✓</div>
+            <div>
+              <h3 class="font-bold mb-1">Instant Booking</h3>
+              <p class="text-gray-400 text-sm">Book a car in seconds with our streamlined reservation system.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="text-yellow-400 text-2xl">✓</div>
+            <div>
+              <h3 class="font-bold mb-1">Secure Payments</h3>
+              <p class="text-gray-400 text-sm">Your transactions are protected with bank-level encryption.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="text-yellow-400 text-2xl">✓</div>
+            <div>
+              <h3 class="font-bold mb-1">24/7 Support</h3>
+              <p class="text-gray-400 text-sm">Our support team is always available to help you.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="mt-12 pt-8 border-t border-gray-800 flex gap-8">
+          <div>
+            <p class="text-2xl font-bold text-yellow-400">50K+</p>
+            <p class="text-gray-400 text-sm">Active Users</p>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-yellow-400">500+</p>
+            <p class="text-gray-400 text-sm">Available Cars</p>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-yellow-400">99%</p>
+            <p class="text-gray-400 text-sm">Satisfaction</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Section - Login Form -->
+      <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 backdrop-blur-xl">
+        <h3 class="text-2xl font-bold mb-8 text-center">Sign In</h3>
+
+        <form method="POST" action="{% url 'login' %}" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div>
+                <label class="block text-gray-300 font-medium mb-2">Username</label>
+                <input type="text" name="username" placeholder="Enter your username" required
+                style="width:100%; padding:12px; border-radius:8px; border:1px solid #334155; background:#ffffff; color:#000; font-size:16px;"
+                onfocus="this.style.borderColor='#fca311'" onblur="this.style.borderColor='#334155'">
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label class="block text-gray-300 font-medium mb-2">Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required
+                style="width:100%; padding:12px; border-radius:8px; border:1px solid #334155; background:#ffffff; color:#000; font-size:16px;"
+                onfocus="this.style.borderColor='#fca311'" onblur="this.style.borderColor='#334155'">
+            </div>
+
+            <!-- Remember Me -->
+            <div class="flex items-center justify-between">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" style="cursor:pointer;">
+                    <span class="text-gray-400 text-sm">Remember me</span>
+                </label>
+                <a href="#" class="text-yellow-400 hover:text-yellow-300 text-sm">Forgot password?</a>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" style="width:100%; padding:12px; background:#fca311; border:none; border-radius:8px; font-weight:600; cursor:pointer; color:black; font-size:16px; transition:opacity 0.3s;">
+                Sign In
+            </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="relative my-8">
+            <div class="absolute inset-0 flex items-center">
+                <div style="width:100%; border-top:1px solid #334155;"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+                <span style="padding:0 8px; background:#111827; color:#8b5cf6;">OR</span>
+            </div>
+        </div>
+
+        <!-- Sign Up Link -->
+        <p style="text-align:center; margin-top:20px; color:#aaa;">
+            Don't have an account?
+            <a href="{% url 'register' %}" style="color:#fca311; font-weight:600; text-decoration:none;">Create one now</a>
+        </p>
+
+        <!-- Back Link -->
+        <p style="text-align:center; margin-top:16px; color:#666;">
+            <a href="{% url 'home' %}" style="color:#60a5fa; text-decoration:none;">← Back to home</a>
+        </p>
+
+        <!-- Security Info -->
+        <div style="background:#1e293b; border:1px solid #334155; border-radius:8px; padding:12px; margin-top:20px; font-size:12px; color:#94a3b8;">
+            🔒 Your login is secure. We use SSL encryption to protect your data.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Fleet | Velocity{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen bg-gray-950 text-gray-200">
+{% include "sidebar.html" %}
+
+  <!-- Main Content -->
+  <main class="flex-1 p-8">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-10">
+      <h1 class="text-3xl font-bold">Fleet</h1>
+      <a href="{% url 'new_booking' %}" class="bg-yellow-400 text-black px-5 py-2 rounded-lg font-semibold hover:opacity-90 transition">
+        + Book a Car
+      </a>
+    </div>
+
+    <!-- Search & Filter -->
+    <div class="flex flex-col md:flex-row gap-4 mb-10">
+      <input type="text" placeholder="Search by brand or model..."
+        class="flex-1 px-4 py-3 rounded-lg bg-gray-900 border border-gray-800 focus:border-yellow-400 focus:outline-none">
+
+      <select class="px-4 py-3 rounded-lg bg-gray-900 border border-gray-800 focus:border-yellow-400 focus:outline-none">
+        <option>All Categories</option>
+        <option>Luxury</option>
+        <option>Sports</option>
+        <option>SUV</option>
+      </select>
+    </div>
+
+    <div class="space-y-5">
+      {% for fleet in flee %}
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 hover:border-yellow-400 transition-all duration-200">
+
+        <div class="flex items-center gap-6">
+
+          <!-- Image -->
+          <div class="w-40 h-24 flex-shrink-0">
+            <img src="{{ fleet.img.url }}" alt="{{ fleet.brand }} {{ fleet.car_model }}"
+                 class="w-full h-full object-cover rounded-lg">
+          </div>
+
+          <!-- Details -->
+          <div class="flex-1 min-w-0">
+            <h3 class="text-lg font-semibold truncate">
+              {{ fleet.brand }} {{ fleet.car_model }}
+            </h3>
+
+            <p class="text-sm text-gray-400">
+              {{ fleet.car_variant }} • {{ fleet.category }}
+            </p>
+
+            <p class="text-yellow-400 font-medium mt-1">
+              ${{ fleet.price }} <span class="text-xs text-gray-400">/ day</span>
+            </p>
+          </div>
+
+          <!-- Status -->
+          <div>
+            {% if fleet.available %}
+            <span class="px-3 py-1 text-xs rounded-full bg-green-500/20 text-green-400">
+              Available
+            </span>
+            {% else %}
+            <span class="px-3 py-1 text-xs rounded-full bg-red-500/20 text-red-400">
+              Booked
+            </span>
+            {% endif %}
+          </div>
+
+          <!-- Actions -->
+          <div class="flex gap-2">
+            <a href="{% url 'cardetail' fleet.id %}" class="bg-gray-800 hover:bg-gray-700 px-3 py-2 rounded-md text-sm transition">
+              View Detail
+            </a>
+            {% if fleet.available %}
+            <a href="{% url 'new_booking' %}" class="bg-yellow-400 text-black hover:opacity-90 px-3 py-2 rounded-md text-sm transition font-medium">
+              Book
+            </a>
+            {% endif %}
+          </div>
+
+        </div>
+
+      </div>
+      {% empty %}
+      <p class="text-gray-400 text-center py-8">No cars available</p>
+      {% endfor %}
+
+    </div>
+
+  </main>
+</div>
+{% endblock %}

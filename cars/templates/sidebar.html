@@ -1,0 +1,22 @@
+
+{% if request.session.username %}
+<!-- Sidebar - Only shown when user is logged in -->
+<aside class="w-64 bg-gray-900 border-r border-gray-800 p-6 hidden md:block">
+  <h2 class="text-2xl font-bold text-yellow-400 mb-10">Velocity</h2>
+
+  <nav class="space-y-3 text-sm">
+    <a href="{% url 'dashboard' %}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 transition">
+      Dashboard
+    </a>
+    <a href="{% url 'fleet' %}" class="block px-4 py-2 rounded-lg bg-yellow-400 text-black font-semibold">
+      Fleet
+    </a>
+    <a href="{% url 'bookings'%}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 transition">
+      Bookings
+    </a>
+    <a href="{% url 'users' %}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 transition">
+      Users
+    </a>
+  </nav>
+</aside>
+{% endif %}
